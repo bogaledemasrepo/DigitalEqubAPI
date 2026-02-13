@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1770999535499,
+      "tag": "0000_overjoyed_wendell_vaughn",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1771000717200,
+      "tag": "0001_faithful_patch",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1771000804543,
+      "tag": "0002_unusual_havok",
+      "breakpoints": true
+    }
+  ]
+}
