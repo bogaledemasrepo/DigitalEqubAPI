@@ -2,11 +2,24 @@
   "entryFile": "app.ts",
   "routes": {
     "routesDir": "generated",
-    "esm": false 
+    "authenticationModule": "./services/Authentication.ts",
+    "esm": true
   },
   "controllerPathGlobs": ["controllers/*Controller.ts"],
   "spec": {
     "outputDirectory": "generated",
-    "specVersion": 3
+    "specVersion": 3,
+    "securityDefinitions": {
+      "jwt": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "security": [
+      {
+        "jwt": []
+      }
+    ]
   }
 }
