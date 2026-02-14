@@ -71,6 +71,7 @@ Visit http://localhost:3000/docs to view the interactive Swagger UI.
 
 
 ## 📁 Project Structure
+```text
 ├── src
 │   ├── controllers/    # tsoa Controllers (Equb, Payment, User)
 │   ├── db/
@@ -81,6 +82,7 @@ Visit http://localhost:3000/docs to view the interactive Swagger UI.
 ├── drizzle/            # SQL migration files
 ├── tsoa.json           # Tsoa configuration
 └── package.json        # Scripts and dependencies
+```
 
 ## 🔒 Security
 
