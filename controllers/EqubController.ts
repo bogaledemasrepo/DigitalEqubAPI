@@ -186,6 +186,7 @@ export class EqubController extends Controller {
     });
   }
 
+
   @Post("{groupId}/request-join")
   @Security("jwt")
   public async requestToJoin(@Request() request: any, @Path() groupId: string) {
@@ -319,10 +320,10 @@ export class EqubController extends Controller {
     }
 
     // 2. Proceed with Payment Verification & Draw...
-    const isReady = await this.equbService.verifyRoundPayments(groupId, round);
-    if (!isReady) throw new HttpError(400, "Dues not fully paid.");
+    // const isReady = await this.equbService.verifyRoundPayments(groupId, round);
+    // if (!isReady) throw new HttpError(400, "Dues not fully paid.");
 
-    return await this.equbService.performDraw(groupId);
+    // return await this.equbService.performDraw(groupId);
   }
 
   @Put("{groupId}/settings")

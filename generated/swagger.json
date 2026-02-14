@@ -180,6 +180,36 @@
 				]
 			}
 		},
+		"/payments/initialize/{groupId}": {
+			"post": {
+				"operationId": "InitializePayment",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {}
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "groupId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
 		"/equb/list": {
 			"get": {
 				"operationId": "GetAllGroups",
@@ -811,49 +841,8 @@
 			"post": {
 				"operationId": "TriggerDraw",
 				"responses": {
-					"200": {
-						"description": "Ok",
-						"content": {
-							"application/json": {
-								"schema": {
-									"properties": {
-										"joinedAt": {
-											"type": "string",
-											"format": "date-time"
-										},
-										"hasWon": {
-											"type": "boolean"
-										},
-										"status": {
-											"type": "string",
-											"enum": [
-												"pending",
-												"approved",
-												"rejected"
-											]
-										},
-										"groupId": {
-											"type": "string"
-										},
-										"userId": {
-											"type": "string"
-										},
-										"id": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"joinedAt",
-										"hasWon",
-										"status",
-										"groupId",
-										"userId",
-										"id"
-									],
-									"type": "object"
-								}
-							}
-						}
+					"204": {
+						"description": "No content"
 					}
 				},
 				"tags": [

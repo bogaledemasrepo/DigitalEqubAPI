@@ -36,18 +36,6 @@ export const equbMembers = pgTable("equb_members", {
   joinedAt: timestamp("joined_at").defaultNow(),
 });
 
-// export const equbMembers = pgTable("equb_members", {
-//   id: uuid("id").primaryKey().defaultRandom(),
-//   userId: uuid("user_id")
-//     .references(() => users.id)
-//     .notNull(),
-//   groupId: uuid("group_id")
-//     .references(() => equbGroups.id)
-//     .notNull(),
-//   hasWon: boolean("has_won").default(false), // Track if they've received the pot
-//   joinedAt: timestamp("joined_at").defaultNow(),
-// });
-
 export const equbWinners = pgTable("equb_winners", {
   id: uuid("id").primaryKey().defaultRandom(),
   groupId: uuid("group_id")
@@ -69,4 +57,14 @@ export const equbPayments = pgTable("equb_payments", {
   status: text("status").$type<"pending" | "completed" | "failed">().default("pending"),
   txReference: varchar("tx_reference", { length: 255 }).unique(), // From Payment Gateway
   paidAt: timestamp("paid_at"),
+});
+
+export const equbPayouts = pgTable("equb_payouts", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  groupId: uuid("group_id").references(() => equbGroups.id),
+  winnerId: uuid("winner_id").references(() => users.id),
+  amount: decimal("amount", { precision: 10, scale: 2 }),
+  status: text("status").default("pending"), // pending, success, failed
+  transferRef: text("transfer_ref").unique(),
+  createdAt: timestamp("created_at").defaultNow(),
 });

@@ -4,10 +4,10 @@ import {
   equbWinners,
   equbPayments,
   equbGroups,
+  users,
 } from "../db/schema";
 import { eq, and, sql, count } from "drizzle-orm";
 import { HttpError } from "./HttpError";
-import {} from "console";
 
 export class EqubService {
   // Check if all active members have paid for the current round
@@ -89,5 +89,50 @@ export class EqubService {
         return winner;
       }
     });
+  }
+  public async processWinnerPayout(groupId: string, winnerUserId: string) {
+    // 1. Calculate the Pot
+    const [group] = await db
+      .select()
+      .from(equbGroups)
+      .where(eq(equbGroups.id, groupId));
+    const members = await db
+      .select()
+      .from(equbMembers)
+      .where(eq(equbMembers.groupId, groupId));
+    if (!group) throw new HttpError(400, "Equb group not found!");
+    const totalCollected = Number(group.amount) * members.length;
+    const platformFee = totalCollected * 0.02; // 2% service fee
+    const payoutAmount = totalCollected - platformFee;
+
+    // 2. Get winner's payment details (assuming you store these in users table)
+    const [winner] = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, winnerUserId));
+    if (!winner) throw new HttpError(400, "Equb group not found!");
+    // 3. Trigger Chapa Transfer
+    try {
+      const response = await fetch("https://api.chapa.co/v1/transfers", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${process.env.CHAPA_SECRET_KEY}` },
+        body: JSON.stringify({
+          account_name: winner.name,
+          account_number: 10003000400112, // Bank account or Telebirr phone
+          amount: payoutAmount,
+          currency: "ETB",
+          bank_code: 656, // e.g., '656' for Telebirr
+          reference: `payout-${groupId}-${winnerUserId}-${Date.now()}`,
+        }),
+      });
+
+      return response.json();
+    } catch (error) {
+      console.error("Payout failed:", error);
+      throw new HttpError(
+        500,
+        "Automated payout failed. Manual intervention required.",
+      );
+    }
   }
 }
