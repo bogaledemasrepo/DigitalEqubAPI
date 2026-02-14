@@ -1,5 +1,5 @@
 {
-  "name": "bun-tsoa-app",
+  "name": "digital-equb-api",
   "module": "index.ts",
   "type": "module",
   "private": true,

@@ -1,0 +1,1 @@
+ALTER TABLE "equb_members" ADD COLUMN "status" text DEFAULT 'pending';

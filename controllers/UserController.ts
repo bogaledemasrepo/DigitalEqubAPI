@@ -8,6 +8,7 @@ import {
   Path,
   Security,
   Request,
+  Tags,
 } from "tsoa";
 
 import { HttpError } from "../services/HttpError";
@@ -20,7 +21,7 @@ interface UserRequest {
   age: number;
   username?: string; // Optional field
 }
-
+@Tags("User Management")
 @Route("users")
 export class UsersController extends Controller {
   @SuccessResponse("201", "Created")
@@ -35,14 +36,14 @@ export class UsersController extends Controller {
   @Get("me")
   @Security("jwt")
   public async getMe(@Request() request: any) {
-    const userId = request.user.userId; // 'user' comes from the 'resolve(decoded)' in authentication.ts
-    console.log("Authenticated user ID:", userId);
-    return await db.select().from(users).where(eq(users.id, userId));
+    const userId = request.user.userId; 
+    return await db.select({id: users.id, name: users.name, email: users.email}).from(users).where(eq(users.id, userId));
   }
 
   @Get("{id}")
+  @Security("jwt")
   public async getUser(@Path() id: string): Promise<any> {
-    const user = await db.select().from(users).where(eq(users.id, id)).limit(1);
+    const user = await db.select({id: users.id, name: users.name, email: users.email}).from(users).where(eq(users.id, id)).limit(1);
 
     if (user.length === 0) {
       // Professional way to trigger a 404

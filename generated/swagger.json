@@ -69,7 +69,7 @@
 		}
 	},
 	"info": {
-		"title": "bun-tsoa-app",
+		"title": "digital-equb-api",
 		"contact": {}
 	},
 	"paths": {
@@ -81,6 +81,9 @@
 						"description": "Created"
 					}
 				},
+				"tags": [
+					"User Management"
+				],
 				"security": [
 					{
 						"jwt": []
@@ -110,9 +113,6 @@
 								"schema": {
 									"items": {
 										"properties": {
-											"password": {
-												"type": "string"
-											},
 											"email": {
 												"type": "string"
 											},
@@ -124,7 +124,6 @@
 											}
 										},
 										"required": [
-											"password",
 											"email",
 											"name",
 											"id"
@@ -137,6 +136,9 @@
 						}
 					}
 				},
+				"tags": [
+					"User Management"
+				],
 				"security": [
 					{
 						"jwt": []
@@ -158,11 +160,929 @@
 						}
 					}
 				},
-				"security": [],
+				"tags": [
+					"User Management"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
 				"parameters": [
 					{
 						"in": "path",
 						"name": "id",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/equb/list": {
+			"get": {
+				"operationId": "GetAllGroups",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"currentMembers": {
+												"type": "number",
+												"format": "double"
+											},
+											"isActive": {
+												"type": "boolean"
+											},
+											"maxMembers": {
+												"type": "number",
+												"format": "double"
+											},
+											"frequency": {
+												"type": "string"
+											},
+											"amount": {
+												"type": "string"
+											},
+											"title": {
+												"type": "string"
+											},
+											"id": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"currentMembers",
+											"isActive",
+											"maxMembers",
+											"frequency",
+											"amount",
+											"title",
+											"id"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equb Logic"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/equb/my-groups": {
+			"get": {
+				"operationId": "GetMyGroups",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"joinedAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"isAdmin": {
+												"type": "boolean"
+											},
+											"amount": {
+												"type": "string"
+											},
+											"title": {
+												"type": "string"
+											},
+											"groupId": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"joinedAt",
+											"isAdmin",
+											"amount",
+											"title",
+											"groupId"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equb Logic"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/equb/search": {
+			"get": {
+				"operationId": "SearchGroups",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"currentMembers": {
+												"type": "number",
+												"format": "double"
+											},
+											"isActive": {
+												"type": "boolean"
+											},
+											"maxMembers": {
+												"type": "number",
+												"format": "double"
+											},
+											"frequency": {
+												"type": "string"
+											},
+											"amount": {
+												"type": "string"
+											},
+											"title": {
+												"type": "string"
+											},
+											"id": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"currentMembers",
+											"isActive",
+											"maxMembers",
+											"frequency",
+											"amount",
+											"title",
+											"id"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equb Logic"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "q",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/equb/search/paged": {
+			"get": {
+				"operationId": "SearchGroupsPaged",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"amount": {
+												"type": "string"
+											},
+											"title": {
+												"type": "string"
+											},
+											"id": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"amount",
+											"title",
+											"id"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equb Logic"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "q",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "page",
+						"required": false,
+						"schema": {
+							"default": 1,
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"required": false,
+						"schema": {
+							"default": 10,
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/equb/{groupId}/detail": {
+			"get": {
+				"operationId": "GetGroupDetail",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"adminName": {
+											"type": "string"
+										},
+										"maxMembers": {
+											"type": "number",
+											"format": "double"
+										},
+										"frequency": {
+											"type": "string"
+										},
+										"amount": {
+											"type": "string"
+										},
+										"title": {
+											"type": "string"
+										},
+										"id": {
+											"type": "string"
+										},
+										"memberCount": {
+											"type": "number",
+											"format": "double"
+										},
+										"members": {
+											"items": {
+												"properties": {
+													"joinedAt": {
+														"type": "string",
+														"format": "date-time"
+													},
+													"hasWon": {
+														"type": "boolean"
+													},
+													"name": {
+														"type": "string"
+													}
+												},
+												"required": [
+													"joinedAt",
+													"hasWon",
+													"name"
+												],
+												"type": "object"
+											},
+											"type": "array"
+										}
+									},
+									"required": [
+										"createdAt",
+										"adminName",
+										"maxMembers",
+										"frequency",
+										"amount",
+										"title",
+										"id",
+										"memberCount",
+										"members"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equb Logic"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "groupId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/equb/create": {
+			"post": {
+				"operationId": "CreateGroup",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"isActive": {
+											"type": "boolean"
+										},
+										"adminId": {
+											"type": "string"
+										},
+										"maxMembers": {
+											"type": "number",
+											"format": "double"
+										},
+										"frequency": {
+											"type": "string"
+										},
+										"amount": {
+											"type": "string"
+										},
+										"title": {
+											"type": "string"
+										},
+										"id": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"createdAt",
+										"isActive",
+										"adminId",
+										"maxMembers",
+										"frequency",
+										"amount",
+										"title",
+										"id"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equb Logic"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"maxMembers": {
+										"type": "number",
+										"format": "double"
+									},
+									"frequency": {
+										"type": "string"
+									},
+									"amount": {
+										"type": "string"
+									},
+									"title": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"maxMembers",
+									"frequency",
+									"amount",
+									"title"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/equb/{groupId}/request-join": {
+			"post": {
+				"operationId": "RequestToJoin",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equb Logic"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "groupId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/equb/{groupId}/pending-requests": {
+			"get": {
+				"operationId": "GetPendingRequests",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"requestedAt": {
+												"type": "string",
+												"format": "date-time"
+											},
+											"userName": {
+												"type": "string"
+											},
+											"userId": {
+												"type": "string"
+											},
+											"requestId": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"requestedAt",
+											"userName",
+											"userId",
+											"requestId"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equb Logic"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "groupId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/equb/{groupId}/manage-request": {
+			"patch": {
+				"operationId": "ManageRequest",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equb Logic"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "groupId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"action": {
+										"type": "string",
+										"enum": [
+											"approved",
+											"rejected"
+										]
+									},
+									"targetUserId": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"action",
+									"targetUserId"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/equb/{groupId}/draw/{round}": {
+			"post": {
+				"operationId": "TriggerDraw",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"joinedAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"hasWon": {
+											"type": "boolean"
+										},
+										"status": {
+											"type": "string",
+											"enum": [
+												"pending",
+												"approved",
+												"rejected"
+											]
+										},
+										"groupId": {
+											"type": "string"
+										},
+										"userId": {
+											"type": "string"
+										},
+										"id": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"joinedAt",
+										"hasWon",
+										"status",
+										"groupId",
+										"userId",
+										"id"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equb Logic"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "groupId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "round",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/equb/{groupId}/settings": {
+			"put": {
+				"operationId": "UpdateSettings",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"createdAt": {
+											"type": "string",
+											"format": "date-time"
+										},
+										"isActive": {
+											"type": "boolean"
+										},
+										"adminId": {
+											"type": "string"
+										},
+										"maxMembers": {
+											"type": "number",
+											"format": "double"
+										},
+										"frequency": {
+											"type": "string"
+										},
+										"amount": {
+											"type": "string"
+										},
+										"title": {
+											"type": "string"
+										},
+										"id": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"createdAt",
+										"isActive",
+										"adminId",
+										"maxMembers",
+										"frequency",
+										"amount",
+										"title",
+										"id"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equb Management",
+					"Equb Logic"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "groupId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"isActive": {
+										"type": "boolean"
+									},
+									"title": {
+										"type": "string"
+									}
+								},
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/equb/{groupId}/status/{round}": {
+			"get": {
+				"operationId": "GetGroupStatus",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"properties": {
+											"hasPaid": {
+												"type": "boolean"
+											},
+											"userId": {
+												"type": "string"
+											},
+											"userName": {
+												"type": "string"
+											}
+										},
+										"required": [
+											"hasPaid",
+											"userId",
+											"userName"
+										],
+										"type": "object"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equb Logic"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "groupId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "round",
+						"required": true,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					}
+				]
+			}
+		},
+		"/equb/{groupId}/members/{userId}": {
+			"delete": {
+				"operationId": "KickMember",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"properties": {
+										"message": {
+											"type": "string"
+										}
+									},
+									"required": [
+										"message"
+									],
+									"type": "object"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Equb Logic"
+				],
+				"security": [
+					{
+						"jwt": []
+					}
+				],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "groupId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "path",
+						"name": "userId",
 						"required": true,
 						"schema": {
 							"type": "string"
